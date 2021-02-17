@@ -1,0 +1,57 @@
+
+function getObjects()
+  -- Helpers
+  setupButton = getObjectFromGUID("")
+
+  --Maps
+  map_eto = getObjectFromGUID("")
+  map_pto = getObjectFromGUID("")
+  map_c2 = getObjectFromGUID("")
+  map_c3 = getObjectFromGUID("")
+  map_c4 = getObjectFromGUID("")
+  map_c7 = getObjectFromGUID("")
+
+  --Tokens
+
+end
+
+function OnLoad()
+  getObjects();
+
+  if setupButton ~= nil then
+    setupButton.interactable = false;
+
+    setupButton.createButton({
+      label="Setup",
+      position={0,0.5,0},
+      clickFunction="setupGame"
+      function_owner=self,
+      height=1500, width=3500,
+      font_color={0,0,0},
+      font_size=2000,
+    })
+  end
+
+  broadcastToAll("Welcome to Cataclysm - A Second World War"), {0,0,0})
+  broadcastToAll("Click Setup once all players are seated!"), {0,0,0})
+end
+
+function setupGame()
+  setupButton.removeButton(0)
+
+  broadcastToAll("All Done"), {0,0,0})
+end
+
+function rollDice(number, modifier)
+  if type(modifier) ~= "number" then
+    modifier = 0
+  end
+  local roll = 0
+  for _=1,number do
+    local temp = math.random(1, 6);
+    if temp > roll then
+      roll = temp
+    end
+  end
+  return roll+modifier
+end
